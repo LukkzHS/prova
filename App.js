@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Button, Text } from 'react-native';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 
@@ -35,8 +35,9 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button title="Ordenar por Prioridade" onPress={sortTasks} />
+      <Text style={styles.title}>Lista de Tarefas</Text>  {/* Título Adicionado */}
       <TaskForm onSubmit={addTask} editingTask={editingTask} />
+      <Button title="Ordenar por Prioridade" onPress={sortTasks} />
       <TaskList tasks={tasks} onDelete={deleteTask} onEdit={startEditing} />
     </SafeAreaView>
   );
@@ -46,6 +47,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 10,
   },
 });
 
