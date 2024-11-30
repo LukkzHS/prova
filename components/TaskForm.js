@@ -51,14 +51,16 @@ const TaskForm = ({ onSubmit, editingTask }) => {
             style={[styles.priorityButton, priority === level && styles.priorityButtonActive]}
             onPress={() => setPriority(level)}
           >
-            <Icon name={level === 'Alta' ? 'exclamation-circle' : level === 'Média' ? 'exclamation-triangle' : 'check-circle'} size={20} color={priority === level ? '#fff' : '#555'} />
+            <Icon
+              name={level === 'Alta' ? 'exclamation-circle' : level === 'Média' ? 'exclamation-triangle' : 'check-circle'}
+              size={20}
+              color={priority === level ? '#fff' : '#000'}
+            />
             <Text style={priority === level ? styles.priorityTextActive : styles.priorityText}>{level}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.submitButtonText}>{editingTask ? "Editar Tarefa" : "Adicionar Tarefa"}</Text>
-      </TouchableOpacity>
+      <Button title={editingTask ? 'Editar Tarefa' : 'Adicionar Tarefa'} onPress={handleSubmit} />
     </View>
   );
 };
@@ -66,47 +68,33 @@ const TaskForm = ({ onSubmit, editingTask }) => {
 const styles = StyleSheet.create({
   form: {
     marginVertical: 16,
-    paddingHorizontal: 16,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 10,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ddd',
-    padding: 12,
-    marginBottom: 12,
-    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 6,
     fontSize: 16,
-    backgroundColor: '#fff',
   },
   priorityLabel: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
-    color: '#333',
   },
   priorityContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 12,
+    marginVertical: 8,
   },
   priorityButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+    padding: 10,
+    borderRadius: 6,
+    backgroundColor: '#f5f5f5',
     width: '30%',
     justifyContent: 'center',
-    shadowColor: '#ccc',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
   },
   priorityButtonActive: {
     backgroundColor: '#007BFF',
@@ -114,22 +102,10 @@ const styles = StyleSheet.create({
   priorityText: {
     marginLeft: 8,
     fontSize: 14,
-    color: '#555',
+    color: '#000',
   },
   priorityTextActive: {
     color: '#fff',
-  },
-  submitButton: {
-    backgroundColor: '#007BFF',
-    padding: 14,
-    borderRadius: 8,
-    marginTop: 16,
-    alignItems: 'center',
-  },
-  submitButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });
 

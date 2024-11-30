@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Button, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Button, FlatList, View } from 'react-native';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [isAscending, setIsAscending] = useState(false);
 
   const addTask = (task) => {
     if (editingTask) {
@@ -28,17 +29,29 @@ const App = () => {
 
   const sortTasks = () => {
     const priorityOrder = { Alta: 1, Média: 2, Baixa: 3 };
-    setTasks((prevTasks) =>
-      [...prevTasks].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
-    );
+    const sortedTasks = [...tasks].sort((a, b) => {
+      return isAscending
+        ? priorityOrder[a.priority] - priorityOrder[b.priority]
+        : priorityOrder[b.priority] - priorityOrder[a.priority];
+    });
+    setTasks(sortedTasks);
+    setIsAscending(!isAscending); 
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Lista de Tarefas</Text>  {/* Título Adicionado */}
+      <View style={styles.header}>
+        <Text style={styles.title}>Lista de Tarefas</Text>
+      </View>
       <TaskForm onSubmit={addTask} editingTask={editingTask} />
-      <Button title="Ordenar por Prioridade" onPress={sortTasks} />
-      <TaskList tasks={tasks} onDelete={deleteTask} onEdit={startEditing} />
+      <Button title={`Ordenar por Prioridade (${isAscending ? 'Crescente' : 'Decrescente'})`} onPress={sortTasks} />
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TaskList task={item} onDelete={deleteTask} onEdit={startEditing} />
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -48,13 +61,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
+  header: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 40,
   },
 });
 
